@@ -30,7 +30,7 @@
           <div class="d-flex justify-content-center" style="font-weight: bold;">
             Top 50 Tokens (Last 30-day)
           </div>
-          <div id="active_address_by_time"></div>
+          <div id="top_tokens"></div>
         </div>
       </div>
       <div class="row" style="margin-top:20px; margin-bottom:20px">
@@ -38,7 +38,74 @@
           <div class="d-flex justify-content-center" style="font-weight: bold;">
             Top Trading Pairs (Last 30-day)
           </div>
-          <div id="active_address_by_time"></div>
+          <div id="top_pairs"></div>
         </div>
       </div>
-      
+       <div class="row" style="margin-top:30px; margin-bottom:30px">
+        <div class="col">
+          <div class="d-flex justify-content-end">
+            <a href="https://explorer.bitquery.io/bsc/smart_contract/0xbcfccbde45ce874adcb698cc183debcf17952812">
+              <img
+                src="https://lh3.googleusercontent.com/gLUJmZaNklu79UkRHR5oHP5eOP6NiRBXoP7mk36LHul-41QqZuh2NVYV_sSN6JLczaPmLO5ZVqZPNFMtPw4JhVR78ctqmJGADPyOlp8pG6r_4J1c4UbQ0aQcA2zneUikWJ3kThGX"
+                style="height: 30px;"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+      (function() {
+   widgets.init('https://graphql.bitquery.io', '', {
+     locale: 'en',
+     theme: 'light'
+   });
+   var query = new widgets.query(`
+query($from:ISO8601DateTime,
+$till:ISO8601DateTime)
+{
+  ethereum(network: bsc) {
+    dexTrades(options:{desc:"Total_USD",limit:50}
+      exchangeName: {is: "Pancake"}
+    date:{since:$from,till:$till}) {
+      Total_USD: tradeAmount(calculate: sum, in: USD)
+      Total_amt:baseAmount(calculate:sum)
+    	baseCurrency{symbol
+      address}
+    }
+  }
+}
+`);
+    var wdts = new widgets.table('#top_tokens', query, 'ethereum.dexTrades', {
+ "title": "Top 50",
+ "dataOptions": [
+  {
+   "title": "Token",
+   "type": "string",
+   "path": "baseCurrency.symbol",
+    "style": "width: 100px",
+    "style":"height: 30px",
+  },
+  {
+   "title": "Token Address",
+   "type": "string-ellipsis",
+   "path": "baseCurrency.address",
+    "style": "width: 350px"
+  },
+  {
+   "title": "Trading USD",
+   "type": "amount",
+   "path": "Total_USD",
+    "style": "width: 200px",
+  },
+  {
+   "title": "Total Amt",
+   "type": "amount",
+   "path": "Total_amt",
+  }
+ ]
+});
+    query.request({"from": "2021-01-01", "till": "2021-03-30"});
+    })();
+  </script>
+</html>
