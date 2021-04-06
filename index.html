@@ -36,7 +36,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top Trading Pairs (Last 30-day)
+            Top 50 Pairs (3/6-4/5)
           </div>
           <div id="top_pairs"></div>
         </div>
@@ -112,4 +112,86 @@ $till:ISO8601DateTime)
     query.request({"from": "2021-03-06", "till": "2021-04-05"});
     })();
   </script>
+  <script>
+      (function(){
+    widgets.init('https://graphql.bitquery.io', 'BQY8IPItkNCP0iK8BqvmhSWV1pxpFqrB', {locale: 'en', theme: 'light'});
+    var query = new widgets.query(`
+query ($from: ISO8601DateTime, $till: ISO8601DateTime, $base: [String!], $quote: [String!]) {
+  ethereum(network: bsc) {
+    dexTrades(
+      exchangeName: {is: "Pancake"}
+      options: {limit: 50, desc: "Total_USD"}
+      date: {since: $from, till: $till}
+      quoteCurrency: {in: $quote}
+      baseCurrency: {notIn: $base}
+    ) {
+      Total_USD: tradeAmount(calculate: sum, in: USD)
+      Base_Amount: baseAmount(calculate: sum)
+      count(uniq: senders)
+      baseCurrency {
+        address
+        base: symbol
+      }
+      quoteCurrency {
+        address
+        quote: symbol
+      }
+    }
+  }
+}
+
+`);
+    var wdts = new widgets.table('#top_pairs', query, 'ethereum.dexTrades', {
+ "title": "Top Trading Pairs",
+ "dataOptions": [
+  {
+   "title": "Base",
+   "type": "string-ellipsis",
+   "path": [
+    "baseCurrency.base",
+   ],
+  },
+  {
+   "title": "Quote",
+   "type": "string-ellipsis",
+   "style": "width: 110px;",
+   "path": [
+    "quoteCurrency.quote",
+   ],
+   "urlCallbackName": "smart_contract_path"
+  },
+  {
+   "title": "Active Address",
+   "path": "count",
+   "style": "width: 110px;",
+   "style": "width: 110px;"
+  },
+  {
+   "title": "Trade Amount (USD)",
+   "type": "amount",
+   "path": "Total_USD",
+   "style": "width: 110px;"
+  },
+  {
+   "title": "Trade Amount (Base)",
+   "type": "amount",
+   "path": "Base_Amount",
+   "style": "width: 110px;"
+  }
+ ]
+});
+    query.request({
+    "from": "2021-03-06",
+  "till": "2021-04-05",
+  "base":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+        "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+        "0x23396cf899ca06c4472205fc903bdb4de249d6fc"],
+  "quote":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", 
+          "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+        "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+        "0x23396cf899ca06c4472205fc903bdb4de249d6fc"]
+    });
+    })()
+    </script>
 </html>
