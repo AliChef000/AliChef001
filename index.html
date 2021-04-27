@@ -23,7 +23,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col">
           <div class="d-flex justify-content-center"  style="color: #E67E22;font-size: x-large; font-weight: bold;" >
-              Pancake Top Tradings 
+              Pancake V2 Top Tradings 
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ $till:ISO8601DateTime)
 {
   ethereum(network: bsc) {
     dexTrades(options:{desc:"Total_USD",limit:50}
-      exchangeName: {is: "Pancake"}
+      exchangeName: {is: "Pancake v2"}
     date:{since:$from,till:$till}) {
       Total_USD: tradeAmount(calculate: sum, in: USD)
       Total_amt:baseAmount(calculate:sum)
@@ -121,7 +121,7 @@ $till:ISO8601DateTime)
 query ($from: ISO8601DateTime, $till: ISO8601DateTime, $base: [String!], $quote: [String!]) {
   ethereum(network: bsc) {
     dexTrades(
-      exchangeName: {is: "Pancake"}
+      exchangeName: {is: "Pancake v2"}
       options: {limit: 50, desc: "Total_USD"}
       date: {since: $from, till: $till}
       quoteCurrency: {in: $quote}
