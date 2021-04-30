@@ -30,7 +30,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Tokens (3/30-4/29)
+            Top 50 Tokens (3/31-4/30)
           </div>
           <div id="top_tokens"></div>
         </div>
@@ -38,7 +38,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Pairs (3/30-4/29)
+            Top 50 Pairs (3/31-4/30)
           </div>
           <div id="top_pairs"></div>
         </div>
@@ -112,21 +112,23 @@ $till:ISO8601DateTime)
   }
  ]
 });
-    query.request({"from": "2021-03-30", "till": "2021-04-29"});
+    query.request({"from": "2021-03-31", "till": "2021-04-30"});
     })();
   </script>
   <script>
       (function(){
     widgets.init('https://graphql.bitquery.io', 'BQY8IPItkNCP0iK8BqvmhSWV1pxpFqrB', {locale: 'en', theme: 'light'});
     var query = new widgets.query(`
-query ($from: ISO8601DateTime, $till: ISO8601DateTime, $base: [String!], $quote: [String!]) {
+query ($from: ISO8601DateTime, 
+  $till: ISO8601DateTime, 
+ $quote: [String!]) {
   ethereum(network: bsc) {
     dexTrades(
-      exchangeName: {is: "Pancake v2"}
-      options: {limit: 50, desc: "Total_USD"}
+      exchangeName: {is: "Pancake"}
+      options: {limit: 60, desc: "Total_USD"}
       date: {since: $from, till: $till}
       quoteCurrency: {in: $quote}
-      baseCurrency: {notIn: $base}
+      
     ) {
       Total_USD: tradeAmount(calculate: sum, in: USD)
       Base_Amount: baseAmount(calculate: sum)
@@ -142,6 +144,7 @@ query ($from: ISO8601DateTime, $till: ISO8601DateTime, $base: [String!], $quote:
     }
   }
 }
+
 
 `);
     var wdts = new widgets.table('#top_pairs', query, 'ethereum.dexTrades', {
@@ -184,17 +187,16 @@ query ($from: ISO8601DateTime, $till: ISO8601DateTime, $base: [String!], $quote:
  ]
 });
     query.request({
-    "from": "2021-03-30",
-  "till": "2021-04-29",
-  "base":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-        "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-        "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
-        "0x23396cf899ca06c4472205fc903bdb4de249d6fc"],
+  "from": "2021-03-31",
+  "till": "2021-04-30",
+ 
   "quote":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", 
           "0xe9e7cea3dedca5984780bafc599bd69add087d56",
         "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
-        "0x23396cf899ca06c4472205fc903bdb4de249d6fc"]
-    });
+        "0x23396cf899ca06c4472205fc903bdb4de249d6fc",
+  "0x2170ed0880ac9a755fd29b2688956bd959f933f8"]
+
+});
     })()
     </script>
 </html>
