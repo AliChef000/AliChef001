@@ -13,9 +13,12 @@
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
        crossorigin="anonymous"
     />
-    <script src="https://cdn.jsdelivr.net/gh/bitquery/widgets@v1.3.8/dist/widgets.js"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-            ></script>
+    <script src="https://cdn.jsdelivr.net/gh/bitquery/widgets@v1.3.8/dist/widgets.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
      <style></style>
   </head>
   <body>
@@ -30,7 +33,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Tokens (4/4-5/4)
+            Top 50 Tokens (4/20-5/20)
           </div>
           <div id="top_tokens"></div>
         </div>
@@ -38,7 +41,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Pairs (4/4-5/4)
+            Top 50 Pairs (4/20-5/20)
           </div>
           <div id="top_pairs"></div>
         </div>
@@ -112,7 +115,7 @@ $till:ISO8601DateTime)
   }
  ]
 });
-    query.request({"from": "2021-04-04", "till": "2021-05-04"});
+    query.request({"from": "2021-04-20", "till": "2021-05-20"});
     })();
   </script>
   <script>
@@ -187,8 +190,8 @@ query ($from: ISO8601DateTime,
  ]
 });
     query.request({
-  "from": "2021-04-04",
-  "till": "2021-05-04",
+  "from": "2021-04-20",
+  "till": "2021-05-20",
  
   "quote":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", 
           "0xe9e7cea3dedca5984780bafc599bd69add087d56",
