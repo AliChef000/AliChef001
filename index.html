@@ -33,7 +33,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Tokens (4/20-5/20)
+            Top 100 Tokens (5/8-6/7)
           </div>
           <div id="top_tokens"></div>
         </div>
@@ -41,7 +41,7 @@
       <div class="row" style="margin-top:20px; margin-bottom:20px">
         <div class="col-md-12">
           <div class="d-flex justify-content-center" style="font-weight: bold;">
-            Top 50 Pairs (4/20-5/20)
+            Top 100 Pairs (5/8-6/7)
           </div>
           <div id="top_pairs"></div>
         </div>
@@ -76,7 +76,7 @@ query($from:ISO8601DateTime,
 $till:ISO8601DateTime)
 {
   ethereum(network: bsc) {
-    dexTrades(options:{desc:"Total_USD",limit:50}
+    dexTrades(options:{desc:"Total_USD",limit:100}
       exchangeName: {is: "Pancake v2"}
     date:{since:$from,till:$till}) {
       Total_USD: tradeAmount(calculate: sum, in: USD)
@@ -115,7 +115,7 @@ $till:ISO8601DateTime)
   }
  ]
 });
-    query.request({"from": "2021-04-20", "till": "2021-05-20"});
+    query.request({"from": "2021-05-08", "till": "2021-06-07"});
     })();
   </script>
   <script>
@@ -128,7 +128,7 @@ query ($from: ISO8601DateTime,
   ethereum(network: bsc) {
     dexTrades(
       exchangeName: {is: "Pancake"}
-      options: {limit: 60, desc: "Total_USD"}
+      options: {limit: 120, desc: "Total_USD"}
       date: {since: $from, till: $till}
       quoteCurrency: {in: $quote}
       
@@ -190,8 +190,8 @@ query ($from: ISO8601DateTime,
  ]
 });
     query.request({
-  "from": "2021-04-20",
-  "till": "2021-05-20",
+  "from": "2021-05-08",
+  "till": "2021-06-07",
  
   "quote":["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", 
           "0xe9e7cea3dedca5984780bafc599bd69add087d56",
